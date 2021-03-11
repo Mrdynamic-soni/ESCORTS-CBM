@@ -1,4 +1,4 @@
-//dependencies
+//dependencies for code 
 #include<WiFi.h>
 #include"DHT.h"
 #include <Adafruit_MPU6050.h>
