@@ -1,7 +1,10 @@
+#dependencies
 import socket 
 import time 
 import mysql.connector
 
+
+#mysql database connector
 mydb = mysql.connector.connect(
   host = "localhost",
   user = "root", 
@@ -26,25 +29,35 @@ s.listen(8)
 
 
 while True:
-    Time = round(time.time() * 1000)
+    Time = round(time.time() * 1000) #timeseries in milliseconds
     mycursor =mydb.cursor()
     c,addr = s.accept()
     
-    data = c.recv(1024).decode("utf-8")
+    data = c.recv(1024).decode("utf-8") #receiving and decoding data 
     DATA = data.split()
     print(DATA)
     
+    
+    #inserting into first table
     q1 = "INSERT INTO TEMPERATURE(time,Celcius) VALUES(%s,%s)"
     val1 = (Time ,DATA[0])
     mycursor.execute(q1,val1)
+    
+     #inserting into second table
     q2 = "INSERT INTO VIBRATION(time,Hz) VALUES(%s,%s)"
     val2= (Time,DATA[1])
     mycursor.execute(q2,val2)
-
+    
+     #inserting into third table
     q3 = "INSERT INTO GYRO(time, gyroX, gyroY, gyroZ) VALUES(%s,%s,%s,%s)"
     val3= (Time,DATA[5],DATA[6],DATA[7])
     mycursor.execute(q3,val3)
+    
+    #commiting all the above insertion
     mydb.commit()
+    
+    #delay in code for better and accyrate database
     time.sleep(1)
+    
     print("RECORD INSRTED")
   
