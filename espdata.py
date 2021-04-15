@@ -12,7 +12,7 @@ mydb = mysql.connector.connect(
   database = "NEW_ESCORTS"  
 )
 
-mycursor =mydb.cursor()
+mycursor = mydb.cursor()
 # mycursor.execute("CREATE DATABASE NEW_ESCORTS")  //to create new databases
 
 # to create tables
